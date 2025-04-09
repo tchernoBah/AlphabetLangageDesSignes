@@ -46,7 +46,8 @@ while True:
             for lm in hand_landmarks.landmark:
                 landmarks.extend([lm.x, lm.y, lm.z])  # Ajouter x, y, z
             csv_writer.writerow(landmarks)
-
+    cv2.putText(frame, "Appuyer sur 'q' pour quitter", (10, 680), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255),
+                2)
     # Afficher la vidéo avec les points détectés
     cv2.imshow("Collecte de données", frame)
 

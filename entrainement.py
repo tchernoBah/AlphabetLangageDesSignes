@@ -4,6 +4,7 @@ import tensorflow as tf
 import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
+from sklearn.metrics import classification_report, accuracy_score
 
 # Charger les données collectées
 data_folder = "sign_data"
@@ -55,4 +56,15 @@ history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=2
 
 # Sauvegarder le modèle
 model.save("alphabet_signs_model.h5")
-print("Modèle enregistré sous le nom 'alphabet_signs_model.h5'")
+print("Modèle enregistré")
+
+# Évaluer la précision sur les données de test
+y_pred = model.predict(X_test)
+y_pred_labels = np.argmax(y_pred, axis=1)
+y_true_labels = np.argmax(y_test, axis=1)
+
+accuracy = accuracy_score(y_true_labels, y_pred_labels)
+print(f"Précision sur les données de test : {accuracy * 100:.2f}%")
+
+# Rapport de classification détaillé
+print(classification_report(y_true_labels, y_pred_labels, target_names=label_encoder.classes_))
